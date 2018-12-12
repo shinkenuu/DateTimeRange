@@ -314,6 +314,32 @@ class Test_DateTimeRange_neq(object):
         assert (lhs != rhs) == expected
 
 
+class Test_DateTimeRange_hash(object):
+    @pytest.mark.parametrize(
+        ["value", "expected"],
+        [
+            [
+                DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900"),
+                ("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900"),
+            ],
+        ],
+    )
+    def test_normal(self, value, expected):
+        assert hash(value) == expected
+
+    @pytest.mark.parametrize(
+        ["value", "expected"],
+        [
+            [
+                DateTimeRange(),
+                ("NaT", "NaT"),
+            ],
+        ],
+    )
+    def test_null(self, value, expected):
+        assert hash(value) == expected
+
+
 class Test_DateTimeRange_add(object):
     @pytest.mark.parametrize(
         ["value", "add_value", "expected"],

@@ -49,11 +49,11 @@ class DateTimeRange(object):
     NOT_A_TIME_STR = "NaT"
 
     def __init__(
-        self,
-        start_datetime=None,
-        end_datetime=None,
-        start_time_format="%Y-%m-%dT%H:%M:%S%z",
-        end_time_format="%Y-%m-%dT%H:%M:%S%z",
+            self,
+            start_datetime=None,
+            end_datetime=None,
+            start_time_format="%Y-%m-%dT%H:%M:%S%z",
+            end_time_format="%Y-%m-%dT%H:%M:%S%z",
     ):
 
         self.set_time_range(start_datetime, end_datetime)
@@ -89,6 +89,9 @@ class DateTimeRange(object):
         return any(
             [self.start_datetime != other.start_datetime, self.end_datetime != other.end_datetime]
         )
+
+    def __hash__(self):
+        return (self.start_datetime, self.end_datetime).__hash__()
 
     def __add__(self, other):
         return DateTimeRange(self.start_datetime + other, self.end_datetime + other)
